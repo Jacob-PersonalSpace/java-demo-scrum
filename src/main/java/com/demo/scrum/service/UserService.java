@@ -19,4 +19,8 @@ public class UserService {
 
         return user.getId();
     }
+
+    public User find(String name, String password) {
+        return userRepository.findOne(name, password);
+    }
 }
