@@ -4,6 +4,10 @@ services:
     container_name: docker-mysql
     image: mysql:5.7
     restart: always
+    ports:
+      - "13306:3306"
+    volumes:
+      - /data:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=scrum"
