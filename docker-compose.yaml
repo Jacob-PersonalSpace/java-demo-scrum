@@ -1,0 +1,12 @@
+version: '3'
+services:
+  demo:
+    container_name: demo
+    image: demo
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    network_mode: "bridge"
+    external_links:
+      - docker-mysql:mysql
