@@ -3,10 +3,10 @@ package com.demo.scrum.service;
 import com.demo.scrum.domain.User;
 import com.demo.scrum.repository.UserRepository;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Component
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
