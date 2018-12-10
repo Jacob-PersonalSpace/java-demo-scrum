@@ -20,7 +20,7 @@ public class User {
     private String name;
 
     @NotNull
-    @Column(length = 20)
+    @Column(length = 500)
     private String password;
 
     @Column(columnDefinition = "bit default 1")
