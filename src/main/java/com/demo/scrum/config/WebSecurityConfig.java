@@ -19,9 +19,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**", "/configuration/ui", "/configuration/security", "/swagger-ui.html", "/webjars/**",
             "/h2-console/**/**", "/public" };
 
-    // @Autowired
-    // private UserDetailsService userDetailsService;
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -33,9 +30,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated().and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()));
     }
-
-    // @Override
-    // public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    //     authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    // }
 }

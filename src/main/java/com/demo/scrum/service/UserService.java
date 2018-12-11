@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Jwts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
@@ -28,18 +29,28 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String generateToken(User user) {
-        User dbUser = userRepository.findOne(user.getName());
+    public String generateToken(String name, String password) {
+        User dbUser = userRepository.findOne(name);
 
         if (dbUser == null) {
-            throw new UserNotFoundException("User " + user.getName() + " is not existend.");
+            throw new UserNotFoundException("User " + name + " is not existend.");
         }
 
-        if (!bCryptPasswordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
             throw new PasswordNotMatchedException("Password is not matched.");
         }
 
-        return Jwts.builder().setSubject(dbUser.getId().toString())
-                .setExpiration(new Date(System.currentTimeMillis() + Constants.exp)).signWith(Constants.key).compact();
+        return generateJwt(dbUser.getId().toString());
+    }
+
+    public String refreshToken() {
+        String userID = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+
+        return generateJwt(userID);
+    }
+
+    private String generateJwt(String userID) {
+        return Jwts.builder().setSubject(userID).setExpiration(new Date(System.currentTimeMillis() + Constants.exp))
+                .signWith(Constants.key).compact();
     }
 }
