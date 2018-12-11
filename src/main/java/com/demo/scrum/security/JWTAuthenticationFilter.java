@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.demo.scrum.constant.ConstantKey;
+import com.demo.scrum.constant.Constants;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,8 +42,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String token = req.getHeader("Authorization");
 
         if (token != null) {
-            String user = Jwts.parser().setSigningKey(ConstantKey.key)
-                    .parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
+            String user = Jwts.parser().setSigningKey(Constants.key).parseClaimsJws(token.replace("Bearer ", ""))
+                    .getBody().getSubject();
 
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
