@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiOperation;
+// import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserController {
@@ -33,7 +33,7 @@ public class UserController {
         return userService.refreshToken();
     }
 
-    @ApiOperation(value = "展示首页信息", notes = "展示首页信息")
+    // @ApiOperation(value = "展示首页信息", notes = "展示首页信息")
     @GetMapping("/")
     public String home() {
         return "Hello World!";
