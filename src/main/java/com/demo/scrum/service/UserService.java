@@ -1,6 +1,7 @@
 package com.demo.scrum.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import com.demo.scrum.constant.Constants;
 import com.demo.scrum.domain.User;
@@ -23,9 +24,14 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public Optional<User> get(Integer userID) {
+        return userRepository.findById(userID);
+    }
+
     public User create(User user) {
         String encodePassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodePassword);
+
         return userRepository.save(user);
     }
 
@@ -44,9 +50,9 @@ public class UserService {
     }
 
     public String refreshToken() {
-        String userID = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return generateJwt(userID);
+        return generateJwt(currentUser.getId().toString());
     }
 
     private String generateJwt(String userID) {
