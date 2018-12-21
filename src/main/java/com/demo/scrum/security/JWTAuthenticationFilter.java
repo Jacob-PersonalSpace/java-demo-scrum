@@ -56,7 +56,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 Optional<User> currentUser = userService.get(Integer.parseInt(userID));
 
                 if (currentUser.isPresent()) {
-                    return new UsernamePasswordAuthenticationToken(currentUser.get(), null, new ArrayList<>());
+                    User realUser = currentUser.get();
+                    realUser.setPassword("");
+                    return new UsernamePasswordAuthenticationToken(realUser, null, new ArrayList<>());
                 }
             }
         }
