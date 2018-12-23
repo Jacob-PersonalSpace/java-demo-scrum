@@ -7,5 +7,5 @@ import io.jsonwebtoken.security.Keys;
 
 public class Constants {
     public static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    public static final Integer exp = 5 * 60 * 1000;
+    public static final Integer exp = 50 * 60 * 1000;
 }

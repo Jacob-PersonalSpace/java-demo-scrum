@@ -36,17 +36,17 @@ public class UserService {
     }
 
     public String generateToken(String name, String password) {
-        User dbUser = userRepository.findOne(name);
+        User currentUser = userRepository.findOne(name);
 
-        if (dbUser == null) {
+        if (currentUser == null) {
             throw new UserNotFoundException("User " + name + " is not existend.");
         }
 
-        if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(password, currentUser.getPassword())) {
             throw new PasswordNotMatchedException("Password is not matched.");
         }
 
-        return generateJwt(dbUser.getId().toString());
+        return generateJwt(currentUser.getId().toString());
     }
 
     public String refreshToken() {
