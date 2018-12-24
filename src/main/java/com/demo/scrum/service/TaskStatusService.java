@@ -1,5 +1,6 @@
 package com.demo.scrum.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.demo.scrum.domain.TaskStatus;
@@ -15,5 +16,9 @@ public class TaskStatusService {
 
     public Optional<TaskStatus> findOne(Integer id) {
         return taskStatusRepository.findById(id);
+    }
+
+    public List<TaskStatus> findAll() {
+        return (List<TaskStatus>) taskStatusRepository.findAll();
     }
 }

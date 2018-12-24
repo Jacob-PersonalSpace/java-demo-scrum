@@ -1,5 +1,6 @@
 package com.demo.scrum.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.demo.scrum.domain.Project;
@@ -62,5 +63,13 @@ public class TaskService {
 
         Task task = new Task(targetProject.get(), name, description, targetTaskStatus.get(), assigner, reporter);
         return taskRepository.save(task);
+    }
+
+    public List<Task> findAllByProjectID(Integer projectID) {
+        return taskRepository.findByProject_Id(projectID);
+    }
+
+    public Task findOneByProjectIDAndTaskID(Integer projectID, Integer taskID) {
+        return taskRepository.findByIdAndProject_Id(taskID, projectID);
     }
 }
