@@ -1,6 +1,7 @@
 package com.demo.scrum.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.demo.scrum.constant.Constants;
@@ -58,5 +59,11 @@ public class UserService {
     private String generateJwt(String userID) {
         return Jwts.builder().setSubject(userID).setExpiration(new Date(System.currentTimeMillis() + Constants.exp))
                 .signWith(Constants.key).compact();
+    }
+
+    public List<User> getAllActiveUsers() {
+        List<User> users = userRepository.findAllActive();
+
+        return users;
     }
 }

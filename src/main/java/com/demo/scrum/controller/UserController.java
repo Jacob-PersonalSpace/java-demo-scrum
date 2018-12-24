@@ -1,5 +1,7 @@
 package com.demo.scrum.controller;
 
+import java.util.List;
+
 import com.demo.scrum.domain.User;
 import com.demo.scrum.service.UserService;
 
@@ -7,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-// import io.swagger.annotations.ApiOperation;
-
 @RestController
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -33,9 +35,8 @@ public class UserController {
         return userService.refreshToken();
     }
 
-    // @ApiOperation(value = "展示首页信息", notes = "展示首页信息")
-    @GetMapping("/")
-    public String home() {
-        return "Hello World!";
+    @GetMapping(value = "/users")
+    public List<User> getAllActiveUsers() {
+        return userService.getAllActiveUsers();
     }
 }
