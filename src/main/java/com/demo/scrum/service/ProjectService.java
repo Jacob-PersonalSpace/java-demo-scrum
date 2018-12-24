@@ -1,5 +1,7 @@
 package com.demo.scrum.service;
 
+import java.util.Optional;
+
 import com.demo.scrum.domain.Project;
 import com.demo.scrum.repository.ProjectRepository;
 
@@ -15,5 +17,9 @@ public class ProjectService {
         Project newProject = new Project(name, description);
 
         return projectRepository.save(newProject);
+    }
+
+    public Optional<Project> findOne(Integer id) {
+        return projectRepository.findById(id);
     }
 }
