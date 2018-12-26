@@ -40,11 +40,11 @@ public class UserService {
         User currentUser = userRepository.findOne(name);
 
         if (currentUser == null) {
-            throw new UserNotFoundException("User " + name + " is not existend.");
+            throw new UserNotFoundException(name);
         }
 
         if (!bCryptPasswordEncoder.matches(password, currentUser.getPassword())) {
-            throw new PasswordNotMatchedException("Password is not matched.");
+            throw new PasswordNotMatchedException();
         }
 
         return generateJwt(currentUser.getId().toString());

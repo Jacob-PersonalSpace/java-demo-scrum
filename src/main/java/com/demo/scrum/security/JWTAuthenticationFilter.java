@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.demo.scrum.constant.Constants;
 import com.demo.scrum.domain.User;
+import com.demo.scrum.exception.UnauthorizedException;
 import com.demo.scrum.service.UserService;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
@@ -49,8 +53,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String token = req.getHeader("Authorization");
 
         if (token != null) {
-            String userID = Jwts.parser().setSigningKey(Constants.key).parseClaimsJws(token.replace("Bearer ", ""))
-                    .getBody().getSubject();
+            String userID = varifyJwtToken(token).getBody().getSubject();
 
             if (userID != null) {
                 Optional<User> currentUser = userService.get(Integer.parseInt(userID));
@@ -63,6 +66,14 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             }
         }
 
-        return null;
+        throw new UnauthorizedException();
+    }
+
+    private Jws<Claims> varifyJwtToken(String token) {
+        try {
+            return Jwts.parser().setSigningKey(Constants.key).parseClaimsJws(token.replace("Bearer ", ""));
+        } catch (JwtException e) {
+            throw new UnauthorizedException();
+        }
     }
 }

@@ -54,7 +54,7 @@ public class TaskService {
         }
 
         if (!targetProject.isPresent()) {
-            throw new ProjectNotFoundException("Project " + projectID + " is not existend.");
+            throw new ProjectNotFoundException(projectID);
         }
 
         if (!targetTaskStatus.isPresent()) {

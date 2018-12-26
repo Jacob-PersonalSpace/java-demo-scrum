@@ -1,13 +1,9 @@
 package com.demo.scrum.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-@ResponseStatus(HttpStatus.NOT_FOUND)
 public class TaskStatusNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-	public TaskStatusNotFoundException(String message) {
-        super(message);
+	public TaskStatusNotFoundException(String name) {
+        super("Task status " + name + " is not existend.");
     }
 }

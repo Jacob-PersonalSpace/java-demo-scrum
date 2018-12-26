@@ -3,9 +3,11 @@ package com.demo.scrum.controller;
 import java.util.List;
 
 import com.demo.scrum.domain.User;
+import com.demo.scrum.viewObject.APIResponse;
 import com.demo.scrum.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,23 +22,27 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/signup")
-    public User signup(@RequestBody User user) {
-        return userService.create(user);
+    public APIResponse<User> signup(@RequestBody User user) {
+        User newUser = userService.create(user);
+        return new APIResponse<>(HttpStatus.OK.value(), true, newUser);
     }
 
     @GetMapping(value = "/signin")
-    public String signin(@RequestParam(value = "name", required = true) String name,
+    public APIResponse<String> signin(@RequestParam(value = "name", required = true) String name,
             @RequestParam(value = "password", required = true) String password) {
-        return userService.generateToken(name, password);
+        String token = userService.generateToken(name, password);
+        return new APIResponse<>(HttpStatus.OK.value(), true, token);
     }
 
     @GetMapping(value = "/refreshToken")
-    public String refreshToken() {
-        return userService.refreshToken();
+    public APIResponse<String> refreshToken() {
+        String newToken = userService.refreshToken();
+        return new APIResponse<>(HttpStatus.OK.value(), true, newToken);
     }
 
     @GetMapping(value = "/users")
-    public List<User> getAllActiveUsers() {
-        return userService.getAllActiveUsers();
+    public APIResponse<List<User>> getAllActiveUsers() {
+        List<User> users = userService.getAllActiveUsers();
+        return new APIResponse<>(HttpStatus.OK.value(), true, users);
     }
 }
