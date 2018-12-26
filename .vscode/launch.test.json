@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "scrum",
+                "projectName": "scrum",
+                "workingDirectory": "d:\\MyPersonalProject\\java-demo-scrum",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "scrum",
+                "projectName": "scrum",
+                "workingDirectory": "d:\\MyPersonalProject\\java-demo-scrum",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
