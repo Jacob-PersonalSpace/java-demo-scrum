@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/user")
+@RestController("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -45,4 +45,5 @@ public class UserController {
         List<User> users = userService.getAllActiveUsers();
         return new APIResponse<>(HttpStatus.OK.value(), true, users);
     }
+
 }

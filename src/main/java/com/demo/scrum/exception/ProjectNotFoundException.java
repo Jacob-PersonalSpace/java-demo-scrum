@@ -6,4 +6,8 @@ public class ProjectNotFoundException extends RuntimeException {
     public ProjectNotFoundException(Integer projectID) {
         super("Project " + projectID + " is not existend.");
     }
+
+    public ProjectNotFoundException(String name) {
+        super("Project " + name + " is not existend.");
+    }
 }

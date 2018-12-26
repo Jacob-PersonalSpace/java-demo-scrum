@@ -8,9 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
+
+    public User(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,48 +42,4 @@ public class User {
     @Column(columnDefinition = "bit default 1")
     private Boolean active = true;
 
-    public User() {
-    }
-
-    public User(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
 }

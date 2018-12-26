@@ -8,15 +8,18 @@ import com.demo.scrum.domain.Task;
 import com.demo.scrum.domain.TaskStatus;
 import com.demo.scrum.domain.User;
 import com.demo.scrum.exception.ProjectNotFoundException;
+import com.demo.scrum.exception.TaskNotFoundException;
 import com.demo.scrum.exception.TaskStatusNotFoundException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.TaskRepository;
+import com.demo.scrum.viewObject.ViewTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TaskService {
+
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
@@ -26,42 +29,42 @@ public class TaskService {
     @Autowired
     private UserService userService;
 
-    public Task create(Integer projectID, String name, String description, Integer statusID, Integer assignerID,
-            Integer reporterID) {
-        Optional<Project> targetProject = projectService.findOne(projectID);
+    public Task create(ViewTask viewTask) {
+        Optional<Project> targetProject = projectService.findOne(viewTask.getProjectID());
         User assigner = null;
         User reporter = null;
-        Optional<TaskStatus> targetTaskStatus = taskStatusService.findOne(statusID);
+        Optional<TaskStatus> targetTaskStatus = taskStatusService.findOne(viewTask.getStatusID());
 
-        if (assignerID != null && assignerID > 0) {
-            Optional<User> targetAssigner = userService.get(assignerID);
+        if (viewTask.getAssignerID() != null && viewTask.getAssignerID() > 0) {
+            Optional<User> DBAssigner = userService.get(viewTask.getAssignerID());
 
-            if (!targetAssigner.isPresent()) {
-                throw new UserNotFoundException("Assigner " + assignerID + " is not existend.");
+            if (!DBAssigner.isPresent()) {
+                throw new UserNotFoundException(viewTask.getAssignerName());
             } else {
-                assigner = targetAssigner.get();
+                assigner = DBAssigner.get();
             }
         }
 
-        if (reporterID != null && reporterID > 0) {
-            Optional<User> targetReporter = userService.get(reporterID);
+        if (viewTask.getReporterID() != null && viewTask.getReporterID() > 0) {
+            Optional<User> DBReporter = userService.get(viewTask.getReporterID());
 
-            if (!targetReporter.isPresent()) {
-                throw new UserNotFoundException("Reporter " + reporterID + " is not existend.");
+            if (!DBReporter.isPresent()) {
+                throw new UserNotFoundException(viewTask.getReporterName());
             } else {
-                reporter = targetReporter.get();
+                reporter = DBReporter.get();
             }
         }
 
         if (!targetProject.isPresent()) {
-            throw new ProjectNotFoundException(projectID);
+            throw new ProjectNotFoundException(viewTask.getProjectName());
         }
 
         if (!targetTaskStatus.isPresent()) {
-            throw new TaskStatusNotFoundException("Project " + statusID + " is not existend.");
+            throw new TaskStatusNotFoundException(viewTask.getStatusName());
         }
 
-        Task task = new Task(targetProject.get(), name, description, targetTaskStatus.get(), assigner, reporter);
+        Task task = new Task(targetProject.get(), viewTask.getName(), viewTask.getDescription(), targetTaskStatus.get(),
+                assigner, reporter);
         return taskRepository.save(task);
     }
 
@@ -69,7 +72,14 @@ public class TaskService {
         return taskRepository.findByProject_Id(projectID);
     }
 
-    public Task findOneByProjectIDAndTaskID(Integer projectID, Integer taskID) {
-        return taskRepository.findByIdAndProject_Id(taskID, projectID);
+    public ViewTask get(Integer taskID, String name) {
+        Optional<Task> task = taskRepository.findById(taskID);
+
+        if (!task.isPresent()) {
+            throw new TaskNotFoundException(name);
+        }
+
+        return new ViewTask(task.get());
     }
+
 }
