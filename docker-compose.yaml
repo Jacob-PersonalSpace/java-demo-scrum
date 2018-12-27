@@ -18,7 +18,7 @@ services:
     image: demo
     restart: always
     ports:
-      - "8080:8080"
+      - "8070:8070"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     network_mode: "bridge"
