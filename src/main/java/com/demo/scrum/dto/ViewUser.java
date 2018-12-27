@@ -1,4 +1,4 @@
-package com.demo.scrum.viewObject;
+package com.demo.scrum.dto;
 
 import com.demo.scrum.domain.User;
 
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SignupResponse {
+public class ViewUser {
 
-    public SignupResponse(User user) {
+    public ViewUser(User user) {
         id = user.getId();
         name = user.getName();
         active = user.getActive();

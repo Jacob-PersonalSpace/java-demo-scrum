@@ -7,7 +7,7 @@ import com.demo.scrum.exception.ProjectNotFoundException;
 import com.demo.scrum.exception.TaskStatusNotFoundException;
 import com.demo.scrum.exception.UnauthorizedException;
 import com.demo.scrum.exception.UserNotFoundException;
-import com.demo.scrum.viewObject.APIResponse;
+import com.demo.scrum.dto.response.APIResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

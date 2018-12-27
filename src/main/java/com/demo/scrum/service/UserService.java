@@ -9,8 +9,8 @@ import com.demo.scrum.domain.User;
 import com.demo.scrum.exception.PasswordNotMatchedException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.UserRepository;
-import com.demo.scrum.viewObject.SignupRequest;
-import com.demo.scrum.viewObject.SignupResponse;
+import com.demo.scrum.dto.request.SignupRequest;
+import com.demo.scrum.dto.response.SignupResponse;
 
 import org.springframework.stereotype.Service;
 

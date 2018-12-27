@@ -1,4 +1,4 @@
-package com.demo.scrum.viewObject;
+package com.demo.scrum.dto.response;
 
 import org.springframework.stereotype.Component;
 

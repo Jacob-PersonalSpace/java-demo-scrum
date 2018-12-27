@@ -1,4 +1,4 @@
-package com.demo.scrum.viewObject;
+package com.demo.scrum.dto;
 
 import java.util.Date;
 

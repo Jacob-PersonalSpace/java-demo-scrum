@@ -6,9 +6,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.demo.scrum.domain.User;
-import com.demo.scrum.viewObject.APIResponse;
-import com.demo.scrum.viewObject.SignupRequest;
-import com.demo.scrum.viewObject.SignupResponse;
+import com.demo.scrum.dto.response.APIResponse;
+import com.demo.scrum.dto.request.SignupRequest;
+import com.demo.scrum.dto.response.SignupResponse;
 import com.demo.scrum.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

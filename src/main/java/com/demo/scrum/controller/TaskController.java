@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.demo.scrum.domain.Task;
 import com.demo.scrum.service.TaskService;
-import com.demo.scrum.viewObject.APIResponse;
-import com.demo.scrum.viewObject.ViewTask;
+import com.demo.scrum.dto.response.APIResponse;
+import com.demo.scrum.dto.ViewTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -2,7 +2,7 @@ package com.demo.scrum.controller;
 
 import com.demo.scrum.domain.Project;
 import com.demo.scrum.service.ProjectService;
-import com.demo.scrum.viewObject.APIResponse;
+import com.demo.scrum.dto.response.APIResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

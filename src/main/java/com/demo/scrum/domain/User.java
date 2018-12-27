@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.demo.scrum.viewObject.SignupRequest;
+import com.demo.scrum.dto.request.SignupRequest;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -12,7 +12,7 @@ import com.demo.scrum.exception.TaskNotFoundException;
 import com.demo.scrum.exception.TaskStatusNotFoundException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.TaskRepository;
-import com.demo.scrum.viewObject.ViewTask;
+import com.demo.scrum.dto.ViewTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
