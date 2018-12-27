@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.demo.scrum.viewObject.SignupRequest;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user")
 public class User {
+
+    public User(SignupRequest signupRequest) {
+        name = signupRequest.getName();
+        password = signupRequest.getPassword();
+    }
 
     public User(Integer id, String name) {
         this.id = id;

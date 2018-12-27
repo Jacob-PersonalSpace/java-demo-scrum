@@ -1,13 +1,21 @@
 package com.demo.scrum.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import com.demo.scrum.domain.User;
 import com.demo.scrum.viewObject.APIResponse;
+import com.demo.scrum.viewObject.SignupRequest;
+import com.demo.scrum.viewObject.SignupResponse;
 import com.demo.scrum.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +31,21 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/signup")
-    public APIResponse<User> signup(@RequestBody User user) {
-        User newUser = userService.create(user);
-        return new APIResponse<>(HttpStatus.OK.value(), true, newUser);
+    public ResponseEntity<?> signup(@RequestBody @Valid SignupRequest signupRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errorMsg = new ArrayList<>();
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+
+            for (FieldError fieldError : fieldErrors) {
+                errorMsg.add(fieldError.getDefaultMessage());
+            }
+
+            return ResponseEntity.badRequest().body(new APIResponse<>(HttpStatus.BAD_REQUEST.value(), false, errorMsg));
+        }
+
+        SignupResponse responseData = userService.create(signupRequest);
+
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, responseData));
     }
 
     @GetMapping(value = "/signin")

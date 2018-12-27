@@ -9,6 +9,8 @@ import com.demo.scrum.domain.User;
 import com.demo.scrum.exception.PasswordNotMatchedException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.UserRepository;
+import com.demo.scrum.viewObject.SignupRequest;
+import com.demo.scrum.viewObject.SignupResponse;
 
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,11 @@ public class UserService {
         return userRepository.findById(userID);
     }
 
-    public User create(User user) {
-        String encodePassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodePassword);
-
-        return userRepository.save(user);
+    public SignupResponse create(SignupRequest signupRequest) {
+        String encodePassword = bCryptPasswordEncoder.encode(signupRequest.getPassword());
+        signupRequest.setPassword(encodePassword);
+        User newUser = userRepository.save(new User(signupRequest));
+        return new SignupResponse(newUser);
     }
 
     public String generateToken(String name, String password) {
