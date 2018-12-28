@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -70,7 +69,7 @@ public class TaskControllerE2E {
     @Test
     public void getTasksByProjectID() throws Exception {
         MvcResult result = this.mvc.perform(get("/task/tasks/1").header("Authorization", getBearerToken())).andReturn();
-        MockHttpServletResponse response = result.getResponse();
+        // MockHttpServletResponse response = result.getResponse();
         String s = result.getResponse().getContentAsString();
         System.out.println("----------------------------------" + s);
     }
@@ -79,7 +78,7 @@ public class TaskControllerE2E {
     public void getTaskByTaskID() throws Exception {
         MvcResult result = this.mvc.perform(get("/task/1?name=aaa").header("Authorization", getBearerToken()))
                 .andReturn();
-        MockHttpServletResponse response = result.getResponse();
+        // MockHttpServletResponse response = result.getResponse();
         String s = result.getResponse().getContentAsString();
         System.out.println("----------------------------------" + s);
     }

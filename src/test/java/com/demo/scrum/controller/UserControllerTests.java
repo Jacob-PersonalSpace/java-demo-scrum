@@ -35,26 +35,24 @@ public class UserControllerTests {
     @MockBean
     private UserService userService;
 
-    // @Test
-    // public void signup() throws Exception {
-    // User requestBodyObject = new User("name1", "password1");
-    // User expectResponseObject = new User("name2", "password2");
-    // ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
-    // String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
+    @Test
+    public void signup() throws Exception {
+        User requestBodyObject = new User("name1", "password1");
+        User expectResponseObject = new User("name2", "password2");
+        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
 
-    // given(this.userService.create(any())).willReturn(expectResponseObject);
+        // given(this.userService.create(any())).willReturn(expectResponseObject);
 
-    // MvcResult actualResponse = this.mvc
-    // .perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON))
-    // .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-    // .andReturn();
+        MvcResult actualResponse = this.mvc
+                .perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON))
+                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
 
-    // User actualResponseObject =
-    // objectMapper.readValue(actualResponse.getResponse().getContentAsString(),
-    // User.class);
-    // assertEquals(ow.writeValueAsString(expectResponseObject),
-    // ow.writeValueAsString(actualResponseObject));
-    // }
+        User actualResponseObject = objectMapper.readValue(actualResponse.getResponse().getContentAsString(),
+                User.class);
+        assertEquals(ow.writeValueAsString(expectResponseObject), ow.writeValueAsString(actualResponseObject));
+    }
 
     @Test
     public void signin() throws Exception {
@@ -67,18 +65,18 @@ public class UserControllerTests {
                 .andExpect(status().isOk());
     }
 
-    // @Test
-    // public void refreshToken() throws Exception {
-    // given(this.userService.refreshToken()).willReturn("hahaha");
+    @Test
+    public void refreshToken() throws Exception {
+        given(this.userService.refreshToken()).willReturn("hahaha");
 
-    // this.mvc.perform(get("/refreshToken")).andDo(print()).andExpect(status().isOk())
-    // .andExpect(content().string("hahaha"));
-    // }
+        this.mvc.perform(get("/refreshToken")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string("hahaha"));
+    }
 
-    // @Test
-    // public void home() throws Exception {
-    // this.mvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-    // .andExpect(content().string("Hello World!"));
-    // }
+    @Test
+    public void home() throws Exception {
+        this.mvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string("Hello World!"));
+    }
 
 }
