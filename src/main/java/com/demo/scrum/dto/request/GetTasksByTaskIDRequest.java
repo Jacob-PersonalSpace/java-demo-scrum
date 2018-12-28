@@ -1,6 +1,7 @@
 package com.demo.scrum.dto.request;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -10,10 +11,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetTasksByProjectIDRequest {
+public class GetTasksByTaskIDRequest {
 
     @Min(1)
     @NotNull
-    private Integer productID;
+    private Integer taskID;
+    @NotNull
+    @NotEmpty
+    private String name;
 
 }

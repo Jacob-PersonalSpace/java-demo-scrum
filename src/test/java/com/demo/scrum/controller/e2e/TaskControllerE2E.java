@@ -68,8 +68,17 @@ public class TaskControllerE2E {
     }
 
     @Test
-    public void signin() throws Exception {
-        MvcResult result = this.mvc.perform(get("/task/tasks/").header("Authorization", getBearerToken())).andReturn();
+    public void getTasksByProjectID() throws Exception {
+        MvcResult result = this.mvc.perform(get("/task/tasks/1").header("Authorization", getBearerToken())).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+        String s = result.getResponse().getContentAsString();
+        System.out.println("----------------------------------" + s);
+    }
+
+    @Test
+    public void getTaskByTaskID() throws Exception {
+        MvcResult result = this.mvc.perform(get("/task/1?name=aaa").header("Authorization", getBearerToken()))
+                .andReturn();
         MockHttpServletResponse response = result.getResponse();
         String s = result.getResponse().getContentAsString();
         System.out.println("----------------------------------" + s);

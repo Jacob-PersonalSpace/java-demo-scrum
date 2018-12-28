@@ -34,29 +34,6 @@ public class UserControllerE2E {
 
     private String bearerToken;
 
-    @Before
-    public void insertUserToDBAndGenerateTokenBefore() throws Exception {
-        User requestBodyObject = new User("jacob", "haha");
-        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
-
-        this.mvc.perform(post("/user/signup").contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON))
-                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        MvcResult tokenResponse = this.mvc.perform(get("/user/signin").param("name", "jacob").param("password", "haha"))
-                .andReturn();
-        APIResponse<String> actualResponseObject = objectMapper
-                .readValue(tokenResponse.getResponse().getContentAsString(), APIResponse.class);
-
-        setBearerToken("Bearer " + actualResponseObject.getData());
-    }
-
-    @Test
-    public void refreshToken() throws Exception {
-        this.mvc.perform(get("/user/refreshToken").header("Authorization", getBearerToken()));
-    }
-
     /**
      * @return the bearerToken
      */
@@ -69,6 +46,29 @@ public class UserControllerE2E {
      */
     public void setBearerToken(String bearerToken) {
         this.bearerToken = bearerToken;
+    }
+
+    @Before
+    public void insertUserToDBAndGenerateTokenBefore() throws Exception {
+        User requestBodyObject = new User("jacob", "haha");
+        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
+
+        this.mvc.perform(post("/user/signup").contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON))
+                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        MvcResult tokenResponse = this.mvc.perform(get("/user/signin").param("name", "jacob").param("password", "haha"))
+                .andReturn();
+        APIResponse<?> actualResponseObject = objectMapper.readValue(tokenResponse.getResponse().getContentAsString(),
+                APIResponse.class);
+
+        setBearerToken("Bearer " + actualResponseObject.getData());
+    }
+
+    @Test
+    public void refreshToken() throws Exception {
+        this.mvc.perform(get("/user/refreshToken").header("Authorization", getBearerToken()));
     }
 
     @Test

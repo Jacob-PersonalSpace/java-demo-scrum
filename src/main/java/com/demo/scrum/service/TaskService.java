@@ -13,6 +13,8 @@ import com.demo.scrum.exception.TaskStatusNotFoundException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.TaskRepository;
 import com.demo.scrum.dto.ViewTask;
+import com.demo.scrum.dto.request.GetTasksByTaskIDRequest;
+import com.demo.scrum.dto.response.GetTaskByTaskIDResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,14 +74,11 @@ public class TaskService {
         return taskRepository.findByProject_Id(projectID);
     }
 
-    public ViewTask get(Integer taskID, String name) {
-        Optional<Task> task = taskRepository.findById(taskID);
+    public GetTaskByTaskIDResponse get(GetTasksByTaskIDRequest getTasksByTaskIDRequest) {
+        Task task = taskRepository.findById(getTasksByTaskIDRequest.getTaskID())
+                .orElseThrow(() -> new TaskNotFoundException(getTasksByTaskIDRequest.getName()));
 
-        if (!task.isPresent()) {
-            throw new TaskNotFoundException(name);
-        }
-
-        return new ViewTask(task.get());
+        return new GetTaskByTaskIDResponse(task);
     }
 
 }

@@ -7,8 +7,10 @@ import javax.validation.Valid;
 import com.demo.scrum.domain.Task;
 import com.demo.scrum.service.TaskService;
 import com.demo.scrum.dto.response.APIResponse;
+import com.demo.scrum.dto.response.GetTaskByTaskIDResponse;
 import com.demo.scrum.dto.ViewTask;
 import com.demo.scrum.dto.request.GetTasksByProjectIDRequest;
+import com.demo.scrum.dto.request.GetTasksByTaskIDRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,20 +33,22 @@ public class TaskController {
     @PostMapping(value = "/create")
     public APIResponse<Task> create(@RequestBody ViewTask viewTask) {
         Task newTask = taskService.create(viewTask);
+
         return new APIResponse<>(HttpStatus.OK.value(), true, newTask);
     }
 
     @GetMapping(value = "/tasks/{projectID}")
     public ResponseEntity<?> getTasksByProjectID(@Valid GetTasksByProjectIDRequest getTasksByProjectIDRequest) {
         List<Task> tasks = taskService.findAllByProjectID(getTasksByProjectIDRequest.getProductID());
+
         return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, tasks));
     }
 
     @GetMapping(value = "/{taskID}")
-    public APIResponse<ViewTask> getTask(@PathVariable("taskID") Integer taskID,
-            @RequestParam(value = "name", required = true) String name) {
-        ViewTask result = taskService.get(taskID, name);
-        return new APIResponse<>(HttpStatus.OK.value(), true, result);
+    public ResponseEntity<?> getTaskByTaskID(@Valid GetTasksByTaskIDRequest getTasksByTaskIDRequest) {
+        GetTaskByTaskIDResponse result = taskService.get(getTasksByTaskIDRequest);
+
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, result));
     }
 
 }
