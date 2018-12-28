@@ -2,13 +2,17 @@ package com.demo.scrum.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.demo.scrum.domain.Task;
 import com.demo.scrum.service.TaskService;
 import com.demo.scrum.dto.response.APIResponse;
 import com.demo.scrum.dto.ViewTask;
+import com.demo.scrum.dto.request.GetTasksByProjectIDRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,9 +35,9 @@ public class TaskController {
     }
 
     @GetMapping(value = "/tasks/{projectID}")
-    public APIResponse<List<Task>> getAllTasksByProjectID(@PathVariable("projectID") Integer projectID) {
-        List<Task> tasks = taskService.findAllByProjectID(projectID);
-        return new APIResponse<>(HttpStatus.OK.value(), true, tasks);
+    public ResponseEntity<?> getTasksByProjectID(@Valid GetTasksByProjectIDRequest getTasksByProjectIDRequest) {
+        List<Task> tasks = taskService.findAllByProjectID(getTasksByProjectIDRequest.getProductID());
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, tasks));
     }
 
     @GetMapping(value = "/{taskID}")
