@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class UserControllerE2E {
+public class TaskControllerE2E {
 
     @Autowired
     private MockMvc mvc;
@@ -67,27 +67,20 @@ public class UserControllerE2E {
     }
 
     @Test
-    public void refreshToken() throws Exception {
-        this.mvc.perform(get("/user/refreshToken").header("Authorization", getBearerToken()));
+    public void getTasksByProjectID() throws Exception {
+        MvcResult result = this.mvc.perform(get("/task/tasks/1").header("Authorization", getBearerToken())).andReturn();
+        // MockHttpServletResponse response = result.getResponse();
+        String s = result.getResponse().getContentAsString();
+        System.out.println("----------------------------------" + s);
     }
 
     @Test
-    public void signup() throws Exception {
-        User requestBodyObject = new User("name1", "password1");
-        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
-
-        this.mvc.perform(post("/user/signup").contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON))
-                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+    public void getTaskByTaskID() throws Exception {
+        MvcResult result = this.mvc.perform(get("/task/1?name=aaa").header("Authorization", getBearerToken()))
                 .andReturn();
-    }
-
-    @Test
-    public void signin() throws Exception {
-        String name = "jacob";
-        String password = "haha";
-
-        this.mvc.perform(get("/user/signin").param("name", name).param("password", password));
+        // MockHttpServletResponse response = result.getResponse();
+        String s = result.getResponse().getContentAsString();
+        System.out.println("----------------------------------" + s);
     }
 
 }

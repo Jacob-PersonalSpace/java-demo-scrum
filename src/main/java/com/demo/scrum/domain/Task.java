@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -33,7 +34,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Project project;
 
@@ -44,10 +45,18 @@ public class Task {
     @Column(length = 500)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn
     private TaskStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private User assigner;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private User reporter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
@@ -55,16 +64,13 @@ public class Task {
     @CreatedBy
     private User creator;
 
-    @ManyToOne
-    @JoinColumn
-    private User assigner;
-
-    @ManyToOne
-    @JoinColumn
-    private User reporter;
-
     @CreatedDate
     private Date createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @LastModifiedBy
+    private User updator;
 
     @LastModifiedDate
     private Date updatedAt;
