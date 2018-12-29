@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class CustomerController {
+public class CustomerControllerE2E {
 
     @Autowired
     private MockMvc mvc;
