@@ -13,6 +13,7 @@ import com.demo.scrum.exception.TaskStatusNotFoundException;
 import com.demo.scrum.exception.UserNotFoundException;
 import com.demo.scrum.repository.TaskRepository;
 import com.demo.scrum.dto.ViewTask;
+import com.demo.scrum.dto.request.GetTasksByProjectIDRequest;
 import com.demo.scrum.dto.request.GetTasksByTaskIDRequest;
 import com.demo.scrum.dto.response.GetTaskByTaskIDResponse;
 
@@ -70,8 +71,8 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public List<Task> findAllByProjectID(Integer projectID) {
-        return taskRepository.findByProject_Id(projectID);
+    public List<Task> findAllByProjectID(GetTasksByProjectIDRequest getTasksByProjectIDRequest) {
+        return taskRepository.findByProject_Id(getTasksByProjectIDRequest.getProductID());
     }
 
     public GetTaskByTaskIDResponse get(GetTasksByTaskIDRequest getTasksByTaskIDRequest) {
