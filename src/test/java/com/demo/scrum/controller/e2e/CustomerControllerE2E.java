@@ -89,4 +89,17 @@ public class CustomerControllerE2E {
         System.out.println("----------------------------------" + s);
     }
 
+    @Test
+    public void updateCustomer() throws Exception {
+        Customer requestBodyObject = new Customer("jacob", "kkk");
+        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestBodyJSON = ow.writeValueAsString(requestBodyObject);
+
+        MvcResult result = this.mvc.perform(post("/customer/firstName").header("Authorization", getBearerToken())
+                .contentType(MediaType.APPLICATION_JSON).content(requestBodyJSON)).andReturn();
+        // MockHttpServletResponse response = result.getResponse();
+        String s = result.getResponse().getContentAsString();
+        System.out.println("----------------------------------" + s);
+    }
+
 }
