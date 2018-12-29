@@ -11,12 +11,10 @@ import com.demo.scrum.dto.response.GetTaskByTaskIDResponse;
 import com.demo.scrum.dto.ViewTask;
 import com.demo.scrum.dto.request.GetTasksByProjectIDRequest;
 import com.demo.scrum.dto.request.GetTasksByTaskIDRequest;
-import com.demo.scrum.dto.request.UpdateTaskRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,11 +47,6 @@ public class TaskController {
         GetTaskByTaskIDResponse result = taskService.get(getTasksByTaskIDRequest);
 
         return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, result));
-    }
-
-    @PostMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody @Valid UpdateTaskRequest updateTaskRequest, BindingResult bindingResult) {
-        
     }
 
 }
