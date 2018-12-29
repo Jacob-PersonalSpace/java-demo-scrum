@@ -67,4 +67,11 @@ public class UserController {
         return new APIResponse<>(HttpStatus.OK.value(), true, users);
     }
 
+    @PostMapping(value = "/update")
+    public ResponseEntity<?> updatePassword(@RequestParam String password) {
+        userService.update(password);
+
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true));
+    }
+
 }

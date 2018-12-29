@@ -35,4 +35,11 @@ public class CustomerController {
         return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, targetCustomer));
     }
 
+    @PostMapping(value = "/firstName")
+    public ResponseEntity<?> update(@RequestBody Customer customer) {
+        Customer targetCustomer = customerService.update(customer.getFirstName(), customer.getLastName());
+
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, targetCustomer));
+    }
+
 }
