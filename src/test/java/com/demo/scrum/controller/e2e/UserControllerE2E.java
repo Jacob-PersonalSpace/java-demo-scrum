@@ -90,4 +90,14 @@ public class UserControllerE2E {
         this.mvc.perform(get("/user/signin").param("name", name).param("password", password));
     }
 
+    @Test
+    public void updatePassword() throws Exception {
+        MvcResult result = this.mvc
+                .perform(post("/user/update").header("Authorization", getBearerToken()).param("password", "aaa"))
+                .andReturn();
+        // MockHttpServletResponse response = result.getResponse();
+        String s = result.getResponse().getContentAsString();
+        System.out.println("----------------------------------" + s);
+    }
+
 }

@@ -68,4 +68,8 @@ public class UserService {
 
         return users;
     }
+
+	public void update(String password) {
+		userRepository.updatePassword(password);
+	}
 }
