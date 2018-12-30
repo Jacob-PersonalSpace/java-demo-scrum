@@ -36,9 +36,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
+        String queryParmaeterToken = req.getParameter("token");
         String header = req.getHeader("Authorization");
 
-        if (header == null || !header.startsWith("Bearer ")) {
+        if ((header == null || !header.startsWith("Bearer ")) && queryParmaeterToken == null) {
             chain.doFilter(req, res);
             return;
         }
@@ -51,6 +52,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
         String token = req.getHeader("Authorization");
+
+        if (token == null) {
+            token = req.getParameter("token");
+        }
 
         if (token != null) {
             String userID = varifyJwtToken(token).getBody().getSubject();
