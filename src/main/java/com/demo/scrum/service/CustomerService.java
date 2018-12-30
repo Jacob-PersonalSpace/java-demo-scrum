@@ -23,6 +23,10 @@ public class CustomerService {
         return customerRepository.save(new Customer(firstName, lastName));
     }
 
+    public Customer get(String customerID) {
+        return customerRepository.findById(customerID).get();
+    }
+
     public Customer findByFirstName(String firstName) {
         return customerRepository.findByFirstName(firstName);
     }
