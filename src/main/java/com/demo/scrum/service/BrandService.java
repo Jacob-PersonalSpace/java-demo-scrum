@@ -5,7 +5,6 @@ import com.demo.scrum.domain.Customer;
 import com.demo.scrum.repository.BrandRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,8 +14,6 @@ public class BrandService {
     private BrandRepository brandRepository;
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     public Brand save(String customerID, String name) {
         Customer customer = customerService.get(customerID);

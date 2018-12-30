@@ -1,14 +1,15 @@
 package com.demo.scrum.domain;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Document(collection = "brands")
 @Data
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class Brand extends BaseDocument {
 
@@ -17,7 +18,7 @@ public class Brand extends BaseDocument {
         this.name = name;
     }
 
-    @DBRef
+    @DBRef(lazy = true)
     private Customer customer;
     private String name;
 
