@@ -49,10 +49,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/signin")
-    public APIResponse<String> signin(@RequestParam(value = "name", required = true) String name,
+    public ResponseEntity<?> signin(@RequestParam(value = "name", required = true) String name,
             @RequestParam(value = "password", required = true) String password) {
         String token = userService.generateToken(name, password);
-        return new APIResponse<>(HttpStatus.OK.value(), true, token);
+
+        return ResponseEntity.ok(new APIResponse<>(HttpStatus.OK.value(), true, token));
     }
 
     @GetMapping(value = "/refreshToken")
